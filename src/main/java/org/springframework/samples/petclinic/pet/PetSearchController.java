@@ -14,21 +14,46 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+/**
+ * Controller class for handling pet search operations in the Spring PetClinic application.
+ * This class manages the pet search functionality, including initializing the search form,
+ * processing search requests, and handling pagination for search results.
+ */
 @Controller
 class PetSearchController {
 
 	private final PetRepository pets;
 
+	/**
+	 * Constructs a new PetSearchController with the specified PetRepository.
+	 *
+	 * @param pets The PetRepository to be used for pet-related database operations.
+	 */
 	public PetSearchController(PetRepository pets) {
 		this.pets = pets;
 	}
 
+	/**
+	 * Initializes the pet search form.
+	 *
+	 * @param model The Model object to add attributes to the view.
+	 * @return The name of the view for the pet search form.
+	 */
 	@GetMapping("/pets/find")
 	public String initFindForm(Model model) {
 		model.addAttribute("pet", new Pet());
 		return "pets/findPets";
 	}
 
+	/**
+	 * Processes the pet search form submission and handles the search results.
+	 *
+	 * @param page The page number for pagination (default is 1).
+	 * @param pet The Pet object containing search criteria.
+	 * @param result The BindingResult for validation errors.
+	 * @param model The Model object to add attributes to the view.
+	 * @return The name of the view to display search results or redirect to a specific pet's owner.
+	 */
 	@GetMapping("/pets")
 	public String processFindForm(@RequestParam(defaultValue = "1") int page, Pet pet, BindingResult result,
 			Model model) {
