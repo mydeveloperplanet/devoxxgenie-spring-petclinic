@@ -3,14 +3,21 @@
 package org.springframework.samples.petclinic.owner;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.samples.petclinic.model.NamedEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,6 +31,11 @@ public class Pet extends NamedEntity {
 	@ManyToOne
 	@JoinColumn(name = "type_id")
 	private PetType type;
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "pet_id")
+	@OrderBy("visit_date ASC")
+	private Set<Visit> visits = new LinkedHashSet<>();
 
 	@ManyToOne
 	@JoinColumn(name = "owner_id")
@@ -45,6 +57,14 @@ public class Pet extends NamedEntity {
 		this.type = type;
 	}
 
+	public Collection<Visit> getVisits() {
+		return this.visits;
+	}
+
+	public void addVisit(Visit visit) {
+		getVisits().add(visit);
+	}
+
 	public Owner getOwner() {
 		return this.owner;
 	}
@@ -52,4 +72,5 @@ public class Pet extends NamedEntity {
 	public void setOwner(Owner owner) {
 		this.owner = owner;
 	}
+
 }
