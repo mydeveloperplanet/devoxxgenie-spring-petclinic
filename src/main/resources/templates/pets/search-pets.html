@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'search')}">
+
+<body>
+
+<h2>Search Pets</h2>
+<form method="post" action="/pets/search">
+  <div class="form-group">
+    <label for="name">Pet Name:</label>
+    <input type="text" class="form-control" id="name" name="name" placeholder="Enter pet name">
+  </div>
+  <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+</body>
+
+</html>
