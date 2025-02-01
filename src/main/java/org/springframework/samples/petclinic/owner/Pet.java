@@ -50,6 +50,10 @@ public class Pet extends NamedEntity {
 	private LocalDate birthDate;
 
 	@ManyToOne
+	@JoinColumn(name = "owner_id")
+	private Owner owner;
+
+	@ManyToOne
 	@JoinColumn(name = "type_id")
 	private PetType type;
 
@@ -64,6 +68,14 @@ public class Pet extends NamedEntity {
 
 	public LocalDate getBirthDate() {
 		return this.birthDate;
+	}
+
+	public Owner getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
 	}
 
 	public PetType getType() {

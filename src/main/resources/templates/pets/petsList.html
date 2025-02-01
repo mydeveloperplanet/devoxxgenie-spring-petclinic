@@ -19,7 +19,11 @@
     <td th:text="${#temporals.format(pet.birthDate, 'yyyy-MM-dd')}"/>
     <td th:text="${pet.type}"/>
     <td>
-      <a th:href="@{/owners/__${pet.owner.id}__}" th:text="${pet.owner?.firstName + ' ' + pet.owner?.lastName}"/></a>
+      <a th:if="${pet.owner != null}"
+         th:href="@{/owners/__${pet.owner.id}__}"
+         th:text="${pet.owner?.firstName + ' ' + pet.owner?.lastName}">
+      </a>
+      <span th:if="${pet.owner == null}">No owner</span>
     </td>
   </tr>
   </tbody>
